@@ -1,6 +1,6 @@
 //go:build ignore
 
-#include "bpf/bpf_endian.h"
+#include "bpf_endian.h"
 #include "common.h"
 
 char __license[] SEC("license") = "Dual MIT/GPL";

@@ -46,6 +46,11 @@ func main() {
 	l, err := link.AttachXDP(link.XDPOptions{
 		Program:   objs.XdpProgFunc,
 		Interface: iface.Index,
+		//Flags XDPAttachFlags,
+
+		// Flags is one of XDPAttachFlags (optional).
+		// Only one XDP mode should be set, without flag defaults
+		// to driver/generic mode (best effort).
 	})
 	if err != nil {
 		log.Fatalf("could not attach XDP program: %s", err)
