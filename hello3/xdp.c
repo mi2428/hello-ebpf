@@ -40,24 +40,6 @@ static __always_inline int parse_ip_src_addr(struct xdp_md *ctx, __u32 *ip_src_a
 		return 0;
 	}
 
-	if (ip->protocol != IPPROTO_UDP) {
-		return 0;
-	}
-
-	// Then parse the UDP header.
-	struct udphdr *udp = (void *)(ip + 1);
-	if ((void *)(udp + 1) > data_end) {
-		return 0;
-	}
-
-	// Here you can access the source and destination ports.
-	__u16 src_port = bpf_ntohs(udp->source);
-	__u16 dst_port = bpf_ntohs(udp->dest);
-
-	if (dst_port != 2152) {
-		return 0;
-	}
-
 	// Return the source IP address in network byte order.
 	*ip_src_addr = (__u32)(ip->saddr);
 	return 1;
