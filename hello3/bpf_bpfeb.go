@@ -12,6 +12,8 @@ import (
 	"github.com/cilium/ebpf"
 )
 
+type bpfFlowInfo struct{ Teid uint32 }
+
 // loadBpf returns the embedded CollectionSpec for bpf.
 func loadBpf() (*ebpf.CollectionSpec, error) {
 	reader := bytes.NewReader(_BpfBytes)
@@ -60,7 +62,7 @@ type bpfProgramSpecs struct {
 //
 // It can be passed ebpf.CollectionSpec.Assign.
 type bpfMapSpecs struct {
-	XdpStatsMap *ebpf.MapSpec `ebpf:"xdp_stats_map"`
+	FlowMap *ebpf.MapSpec `ebpf:"flow_map"`
 }
 
 // bpfObjects contains all objects after they have been loaded into the kernel.
@@ -82,12 +84,12 @@ func (o *bpfObjects) Close() error {
 //
 // It can be passed to loadBpfObjects or ebpf.CollectionSpec.LoadAndAssign.
 type bpfMaps struct {
-	XdpStatsMap *ebpf.Map `ebpf:"xdp_stats_map"`
+	FlowMap *ebpf.Map `ebpf:"flow_map"`
 }
 
 func (m *bpfMaps) Close() error {
 	return _BpfClose(
-		m.XdpStatsMap,
+		m.FlowMap,
 	)
 }
 

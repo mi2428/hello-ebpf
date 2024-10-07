@@ -60,7 +60,7 @@ func main() {
 	ticker := time.NewTicker(1 * time.Second)
 	defer ticker.Stop()
 	for range ticker.C {
-		s, err := formatMapContents(objs.XdpStatsMap)
+		s, err := formatMapContents(objs.FlowMap)
 		if err != nil {
 			log.Printf("Error reading map: %s", err)
 			continue
